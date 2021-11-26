@@ -1,0 +1,16 @@
+{% extends 'share_layout/base.html' %} {% block contents %}
+<h1>{{ course.course_name }}</h1>
+<ul>
+  <li>{{ course.teacher_name }}</li>
+  <li>{{ course.class_hours }}</li>
+  <li>{{ course.course_form }}</li>
+  <li>{{ course.year_semester }}</li>
+</ul>
+
+<h2>Comment</h2>
+<ul>
+  {% for comment in course.comment_set.all %}
+    <li>{{ comment.comment_text }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

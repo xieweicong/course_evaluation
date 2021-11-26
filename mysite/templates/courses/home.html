@@ -1,0 +1,10 @@
+{% extends 'share_layout/base.html' %} 
+{% block title %}HOME{% endblock %} 
+
+{% block contents %}
+<form action="/" method="post">
+  {% csrf_token %} 
+  {{ form }}
+  <input type="submit" value="OK" />
+</form>
+{% endblock %}
