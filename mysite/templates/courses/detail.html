@@ -17,8 +17,10 @@
   <div class="row justify-content-center">
     <div class="col-8">
       <form class="d-flex" action="/courses/{{ course.id }}/" method="post">
-        {% csrf_token %} {{ commentform }}
+        {% csrf_token %} {{ commentform.your_comment }}
+        <button class="btn btn-outline-success" type="submit">OK</button>
       </form>
+      
     </div>
   </div>
 </div>

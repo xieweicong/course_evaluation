@@ -6,8 +6,8 @@
   <ul>
     <div class="row">
       {% for course in course_list %}
-      <div class="col-3">
-        <div class="shadow-sm p-3 mb-5 bg-white rounded card card__one">
+      <div class="col-sm-6 col-xl-3">
+        <div class="shadow-sm p-3 mb-5 bg-white rounded card card__one" style="width: 100%;">
           <div class="card__desc">
             <h3><a href="/courses/{{ course.id }}/">{{ course.course_name }}</a></h3>
             <p>{{ course.teacher_name }}</p>

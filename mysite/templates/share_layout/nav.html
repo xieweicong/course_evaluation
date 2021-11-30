@@ -43,7 +43,7 @@
         </li>
       </ul>
 
-      <form class="d-flex" action="/" method="post">
+      <form class="d-flex form-inline my-2 my-lg-0" action="/" method="post">
         {% csrf_token %} {{ form.name }}
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
