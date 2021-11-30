@@ -10,7 +10,17 @@
 <h2>Comment</h2>
 <ul>
   {% for comment in course.comment_set.all %}
-    <li>{{ comment.comment_text }}</li>
+  <li>{{ comment.comment_text }}</li>
   {% endfor %}
 </ul>
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-8">
+      <form class="d-flex" action="/courses/{{ course.id }}/" method="post">
+        {% csrf_token %} {{ commentform }}
+      </form>
+    </div>
+  </div>
+</div>
+
 {% endblock %}

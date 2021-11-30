@@ -1,26 +1,26 @@
 {% extends 'share_layout/base.html' %} {% block title %}授業一覧{% endblock %}
 {% block contents %}
-	{% if course_list %}
-	<div class="container">
-		<ul>
-			<div class="container">
-				<div class="row">
-					{% for course in course_list %}
-					<div class="col-xs-6 col-sm-3 col-md-3">
-						<li>
-							<a href="/courses/{{ course.id }}/">{{ course.course_name }}</a>
-							<p>{{ course.teacher_name }}</p>
-							<p>{{ course.class_hours }}</p>
-							<p>{{ course.course_form }}</p>
-						</li>
-					</div>
-					{% endfor %}
-				</div>
-			</div>
-		</ul>
-	</div>
+<div class="row" rows="3"></div>
+{% if course_list %}
+<div class="container">
+  <ul>
+    <div class="row">
+      {% for course in course_list %}
+      <div class="col-3">
+        <div class="shadow-sm p-3 mb-5 bg-white rounded card card__one">
+          <div class="card__desc">
+            <h3><a href="/courses/{{ course.id }}/">{{ course.course_name }}</a></h3>
+            <p>{{ course.teacher_name }}</p>
+            <p>{{ course.class_hours }}</p>
+            <p>{{ course.course_form }}</p>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </ul>
+</div>
 
-	{% else %}
-	<p>検索する授業はありません。</p>
-	{% endif %}
-{% endblock %}
+{% else %}
+<p>検索する授業はありません。</p>
+{% endif %} {% endblock %}

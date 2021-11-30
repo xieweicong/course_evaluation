@@ -4,8 +4,8 @@ from django.urls import reverse
 from django.views import generic
 from django.utils import timezone
 
-from .models import Course
-from .forms import NameForm
+from .models import Course, Comment
+from .forms import CommentForm, NameForm
 
 
 # def index(request):
@@ -17,7 +17,18 @@ from .forms import NameForm
 def detail(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
     form = NameForm()
-    return render(request, 'courses/detail.html', {'course': course, 'form': form})
+    if request.method == 'POST':
+        commentform = CommentForm(request.POST)
+        Comment.objects.create(course=course, comment_text=request.POST['your_comment'], pub_date=timezone.now())
+        course = get_object_or_404(Course, pk=course_id)
+        context = {'course': course, 'form': form, 'commentform': commentform}
+        return render(request, 'courses/detail.html', context)
+    else:
+        commentform = CommentForm()
+        context = {'course': course, 'form': form, 'commentform': commentform}
+    return render(request, 'courses/detail.html', context)
+
+    
 
 
 def get_name(request):
