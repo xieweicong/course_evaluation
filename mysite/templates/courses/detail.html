@@ -10,7 +10,7 @@
 <h2>Comment</h2>
 <ul>
   {% for comment in course.comment_set.all %}
-  <li>{{ comment.comment_text }}</li>
+  <li>{{ comment.author.user.username }}: {{ comment.comment_text }}</li>
   {% endfor %}
 </ul>
 <div class="container">
@@ -20,7 +20,6 @@
         {% csrf_token %} {{ commentform.your_comment }}
         <button class="btn btn-outline-success" type="submit">OK</button>
       </form>
-      
     </div>
   </div>
 </div>

@@ -1,4 +1,5 @@
 from django.db import models
+from userprofile.models import Profile
 
 
 class Course(models.Model):
@@ -8,7 +9,7 @@ class Course(models.Model):
     department = models.CharField(max_length=200)
     course_form = models.CharField(max_length=200)
     year_semester = models.CharField(max_length=200)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField("date published")
 
     def __str__(self):
         return self.course_name
@@ -16,5 +17,6 @@ class Course(models.Model):
 
 class Comment(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    author = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
     comment_text = models.TextField(max_length=2000)
-    pub_date = models.DateTimeField('date published')
+    pub_date = models.DateTimeField("date published")
