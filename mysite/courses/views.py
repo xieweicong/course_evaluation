@@ -5,10 +5,11 @@ from django.views import generic
 from django.utils import timezone
 
 from userprofile.models import Profile
+from comment.models import Comment
 from django.contrib.auth.models import User
 
-from .models import Course, Comment
-from .forms import CommentForm, NameForm
+from .models import Course
+from .forms import SearchForm
 
 
 # def index(request):
@@ -19,40 +20,23 @@ from .forms import CommentForm, NameForm
 
 def detail(request, course_id):
     course = get_object_or_404(Course, pk=course_id)
-    author = get_object_or_404(Profile, pk=(request.user.id - 1))
-    form = NameForm()
-    if request.method == "POST":
-        commentform = CommentForm(request.POST)
-        Comment.objects.create(
-            course=course,
-            author=author,
-            comment_text=request.POST["your_comment"],
-            pub_date=timezone.now(),
-        )
-        course = get_object_or_404(Course, pk=course_id)
-        context = {"course": course, "form": form, "commentform": commentform}
-        return render(request, "courses/detail.html", context)
-    else:
-        commentform = CommentForm()
-        context = {"course": course, "form": form, "commentform": commentform}
+    # author = get_object_or_404(Profile, pk=(request.user.id - 1))
+    comments = Comment.objects.filter(course=course_id)
+    form = SearchForm()
+    context = {"course": course, "form": form, "comments": comments}
     return render(request, "courses/detail.html", context)
 
 
-def get_name(request):
-    # if this is a POST request we need to process the form data
+def search_course(request):
     if request.method == "POST":
-        # create a form instance and populate it with data from the request:
-        form = NameForm(request.POST)
-        # check whether it's valid:
-        # if form.is_valid():
-        # process the data in form.cleaned_data as required
-        # ...
-        # redirect to a new URL:
-        course_list = Course.objects.filter(course_name__icontains=request.POST["name"])
-        context = {"course_list": course_list, "form": form}
-        return render(request, "courses/index.html", context)
+        search_form = SearchForm(data=request.POST)
+        if search_form.is_valid():
 
+            data = search_form.cleaned_data
+            course_list = Course.objects.filter(course_name__icontains=data["searchCourse"])
+            context = {"course_list": course_list}
+            return render(request, "courses/index.html", context)
     # if a GET (or any other method) we'll create a blank form
     else:
-        form = NameForm()
-    return render(request, "courses/home.html", {"form": form})
+        search_form = SearchForm()
+    return render(request, "courses/home.html", {"form": search_form})

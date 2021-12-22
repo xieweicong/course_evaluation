@@ -1,0 +1,16 @@
+{% extends 'share_layout/base.html' %} {% block contents %}
+<h1>{{ user.username }}</h1>
+{% for comment in user.comment_set.all %}
+<hr />
+<li>
+  <a href="/courses/{{ comment.course.id }}/"
+    >{{ comment.course.course_name }}</a
+  >
+  : {{ comment.body }}
+</li>
+<form action="{% url 'comment:delete_comment' comment.id %}" method="POST">
+  {% csrf_token %}
+  <!-- 删除按钮 -->
+  <button type="submit" class="btn btn-dark">delete</button>
+</form>
+{% endfor %} {% endblock %}

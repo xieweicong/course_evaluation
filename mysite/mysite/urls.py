@@ -5,8 +5,9 @@ from courses import views
 
 
 urlpatterns = [
-    path("", views.get_name, name="get_name"),
-    path("courses/", include("courses.urls")),
+    path("", views.search_course, name="search_course"),
+    path("courses/", include("courses.urls", namespace="courses")),
     path("admin/", admin.site.urls),
     path("user/", include("userprofile.urls")),
+    path("comment/", include("comment.urls", namespace="comment")),
 ]

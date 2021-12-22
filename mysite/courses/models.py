@@ -1,6 +1,8 @@
 from django.db import models
 from userprofile.models import Profile
 
+from django.urls import reverse
+
 
 class Course(models.Model):
     course_name = models.CharField(max_length=200)
@@ -14,9 +16,6 @@ class Course(models.Model):
     def __str__(self):
         return self.course_name
 
-
-class Comment(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    author = models.ForeignKey(Profile, on_delete=models.CASCADE, default=1)
-    comment_text = models.TextField(max_length=2000)
-    pub_date = models.DateTimeField("date published")
+    # 获取文章地址
+    def get_absolute_url(self):
+        return reverse("course:detail", args=[self.id])

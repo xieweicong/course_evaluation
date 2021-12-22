@@ -1,27 +1,57 @@
 {% extends 'share_layout/base.html' %} {% block contents %}
-<h1>{{ course.course_name }}</h1>
-<ul>
-  <li>{{ course.teacher_name }}</li>
-  <li>{{ course.class_hours }}</li>
-  <li>{{ course.course_form }}</li>
-  <li>{{ course.year_semester }}</li>
-</ul>
+<div class="col-9">
+  <h1>{{ course.course_name }}</h1>
+  <ul>
+    <li>{{ course.teacher_name }}</li>
+    <li>{{ course.class_hours }}</li>
+    <li>{{ course.course_form }}</li>
+    <li>{{ course.year_semester }}</li>
+  </ul>
 
-<h2>Comment</h2>
-<ul>
-  {% for comment in course.comment_set.all %}
-  <li>{{ comment.author.user.username }}: {{ comment.comment_text }}</li>
-  {% endfor %}
-</ul>
-<div class="container">
-  <div class="row justify-content-center">
-    <div class="col-8">
-      <form class="d-flex" action="/courses/{{ course.id }}/" method="post">
-        {% csrf_token %} {{ commentform.your_comment }}
-        <button class="btn btn-outline-success" type="submit">OK</button>
-      </form>
-    </div>
+  <!-- 显示评论 -->
+  <div>
+    {% for comment in comments %}
+    <hr />
+    <p>
+      <strong style="color: pink"> {{ comment.user }} </strong> 于
+      <span style="color: green">
+        {{ comment.pub_date|date:"Y-m-d H:i:s" }}
+      </span>
+      时说：
+    </p>
+    <pre style="font-family: inherit; font-size: 1em">{{ comment.body }}</pre>
+    {% endfor %}
   </div>
+  <!-- 发表评论 -->
+  <hr />
+  {% if user.is_authenticated %}
+  <div>
+    <form action="{% url 'comment:post_comment' course.id %}" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+        <label for="body">
+          <strong> 我也要发言： </strong>
+        </label>
+        <textarea
+          type="text"
+          class="form-control"
+          id="body"
+          name="body"
+          rows="2"
+        ></textarea>
+      </div>
+      <!-- 提交按钮 -->
+      <button type="submit" class="btn btn-primary">发送</button>
+    </form>
+  </div>
+  <br />
+  {% else %}
+  <br />
+  <h5 class="row justify-content-center">
+    请<a href="{% url 'userprofile:login' %}">登录</a>后回复
+  </h5>
+  <br />
+  {% endif %}
 </div>
 
 {% endblock %}

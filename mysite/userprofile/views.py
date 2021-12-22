@@ -1,11 +1,14 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from .forms import UserLoginForm, UserRegisterForm
 
 # 用户主页
+@login_required(login_url="/userprofile/login/")
 def user_page(request):
-    return HttpResponse("user page")
+    context = {"user": request.user}
+    return render(request, "userprofile/mypage.html", context)
 
 # 用户登录
 def user_login(request):
