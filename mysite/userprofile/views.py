@@ -60,7 +60,7 @@ def user_register(request):
             # 取出email和password
             user_name = request.POST["username"]
             number = request.POST["number"]
-            email = number + "@hotmail.com"
+            email = number + "@gmail.com"
             # 实例化用户，然后赋值
             new_user = User()
             new_user.username = user_name
@@ -79,7 +79,7 @@ def user_register(request):
             activate_url = get_activate_url(new_user)
             message = message_template + activate_url
             new_user.email_user(subject, message)
-            return redirect("userprofile:user_page")
+            return HttpResponse("去邮箱认证吧")
         else:
             return HttpResponse("注册表单输入有误。请重新输入~")
     elif request.method == "GET":
