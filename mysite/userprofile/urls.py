@@ -12,4 +12,6 @@ urlpatterns = [
     path("logout/", views.user_logout, name="logout"),
     # 用户注册
     path("register/", views.user_register, name="register"),
+    # 邮箱验证
+    path('activate/<uidb64>/<token>/', views.ActivateView.as_view(), name='activate'),
 ]
