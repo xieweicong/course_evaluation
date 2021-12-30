@@ -1,3 +1,7 @@
+body {
+    background-color: rgb(250, 250, 250);
+}
+
 .top { 
     margin-top: 30px;
 }
@@ -113,3 +117,8 @@
 .card__three:focus::after {
     transform: scale3d(1, 1, 1);
 }
+
+.navbar ul li a {
+    color:#663300;}
+    .navbar ul li a:hover {
+    color:#000;}

@@ -31,7 +31,6 @@ def search_course(request):
     if request.method == "POST":
         search_form = SearchForm(data=request.POST)
         if search_form.is_valid():
-
             data = search_form.cleaned_data
             course_list = Course.objects.filter(course_name__icontains=data["searchCourse"])
             context = {"course_list": course_list}
