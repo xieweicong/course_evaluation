@@ -129,7 +129,7 @@ STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
-FRONTEND_URL = "http://localhost:8000"
+FRONTEND_URL = "http://54.178.17.99:8000"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 EMAIL_USE_TLS = True
