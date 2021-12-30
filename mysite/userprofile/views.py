@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
@@ -26,24 +26,23 @@ def user_login(request):
             # 检验账号、密码是否正确匹配数据库中的某个用户
             # 如果均匹配则返回这个 user 对象
             user = authenticate(username=data["username"], password=data["password"])
-            new_user = User.objects.get(username=data["username"])
-            if new_user.is_active:
+            if get_object_or_404(User, username=data["username"]).is_active:
                 if user:
                     # 将用户数据保存在 session 中，即实现了登录动作
                     login(request, user)
                     return redirect("userprofile:user_page")
                 else:
-                    return HttpResponse("账号或密码输入有误。请重新输入~")
+                    return render(request, "userprofile/sendemail.html", {"content": "ユーザー名またパスワード入力間違い"})
             else:
-                return HttpResponse("先去邮箱认证")
+                return render(request, "userprofile/sendemail.html", {"content": "メールで認証してください"})
         else:
-            return HttpResponse("账号或密码输入不合法")
+            return render(request, "userprofile/sendemail.html", {"content": "ユーザー名またパスワード入力間違い"})
     elif request.method == "GET":
         user_login_form = UserLoginForm()
         context = {"form": user_login_form}
         return render(request, "userprofile/login.html", context)
     else:
-        return HttpResponse("请使用GET或POST请求数据")
+        return HttpResponse("GETとPOSTミス")
 
 
 # 用户登出
@@ -60,7 +59,7 @@ def user_register(request):
             # 取出email和password
             user_name = request.POST["username"]
             number = request.POST["number"]
-            email = number + "@hotmail.com"
+            email = number + "@gmail.com"
             # 实例化用户，然后赋值
             new_user = User()
             new_user.username = user_name
@@ -79,7 +78,7 @@ def user_register(request):
             activate_url = get_activate_url(new_user)
             message = message_template + activate_url
             new_user.email_user(subject, message)
-            return redirect("userprofile:user_page")
+            return render(request, "userprofile/sendemail.html", {"content": "ご登録ありがとうございます。メールで認証してください"})
         else:
             return HttpResponse("注册表单输入有误。请重新输入~")
     elif request.method == "GET":

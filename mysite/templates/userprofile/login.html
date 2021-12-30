@@ -1,20 +1,19 @@
 {% extends 'share_layout/base.html' %} 
 
-{% block title %} 登录 {% endblock title %} 
+{% block title %} ログイン {% endblock title %} 
 
 {% block contents %}
 <div class="container">
   <div class="row">
     <div class="col-12">
       <br>
-    <h5>还没有账号？</h5>
-    <h5>点击<a href='{% url "userprofile:register" %}'>注册账号</a>加入我们吧！</h5>
+    <h5><a href='{% url "userprofile:register" %}'>会員登録</a></h5>
     <br>
       <form method="post" action=".">
         {% csrf_token %}
         <!-- 账号 -->
         <div class="form-group">
-          <label for="username">账号</label>
+          <label for="username">ユーザー名</label>
           <input
             type="text"
             class="form-control"
@@ -24,7 +23,7 @@
         </div>
         <!-- 密码 -->
         <div class="form-group">
-          <label for="password">密码</label>
+          <label for="password">パスワード</label>
           <input
             type="password"
             class="form-control"
@@ -33,7 +32,7 @@
           />
         </div>
         <!-- 提交按钮 -->
-        <button type="submit" class="btn btn-primary">提交</button>
+        <button type="submit" class="btn btn-primary">ログイン</button>
       </form>
     </div>
   </div>

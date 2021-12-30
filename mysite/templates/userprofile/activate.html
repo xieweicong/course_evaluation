@@ -2,6 +2,7 @@
 {% block contents %}
 {% if result %}
     <p>認証に成功しました。</p>
+    <a class="nav-link" href="{% url 'userprofile:login' %}">ログイン</a>
 {% else %}
     <p>無効なリンクです。</p>
 {% endif %}
