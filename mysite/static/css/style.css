@@ -6,6 +6,13 @@ body {
     margin-top: 30px;
 }
 
+.card_text {
+    color: aqua;
+    overflow: hidden; 
+    white-space:nowrap;
+    text-overflow:ellipsis;
+}
+
 .card {
     position: relative;
     flex: 1 1 100%;

@@ -1,23 +1,44 @@
 {% extends 'share_layout/base.html' %} {% block title %}HOME{% endblock %} {% block contents %}
 
-<form action="/" method="post">
-  {% csrf_token %}
-  <div class="input-group flex-nowrap">
-    <span class="input-group-text" id="addon-wrapping">
-      {% comment %} <select
-        class="form-select form-select-sm"
-        aria-label=".form-select-sm example"
-      >
-        <option selected>Open this select menu</option>
-        <option value="1">One</option>
-        <option value="2">Two</option>
-        <option value="3">Three</option>
-      </select> {% endcomment %}
-    </span>
-    <div class="mb-3">
+<div class="row col-lg-8 col-lg-offset-4 col-sm-6 col-sm-offset-3 col-xs-8 col-xs-offset-2">
+  <form action="/" method="post">
+    {% csrf_token %}
+    <div class="input-group flex-nowrap">
       <input type="search" class="form-control" name="searchCourse" id="searchCourse" />
+      <input type="submit" value="search"  class='btn btn-outline-success'/>
     </div>
-  </div>
-  <input type="submit" value="search" />
-</form>
+  </form>
+</div>
+
+<div class="row" rows="3"></div>
+
+<div class="container">
+  <ul>
+    <div class="row">
+      {% for course in course_list %}
+      <div class="col-sm-6 col-xl-3">
+        <div class="shadow-sm p-3 mb-5 bg-white rounded card card__one" style="width: 100%;">
+          <div class="card__desc">
+            <h4 style="overflow: hidden; 
+            white-space:nowrap;
+            text-overflow:ellipsis;"><a href="/courses/{{ course.id }}/">{{ course.course_name }}</a></h4>
+            <p>{{ course.teacher_name }}</p>
+            <p class="card_text">{{ course.class_hours }}</p>
+            {% if course.course_form != " " %}
+            <p style="overflow: hidden; 
+            white-space:nowrap;
+            text-overflow:ellipsis;">{{ course.course_form }}</p>
+            {% else %}
+            <p style="overflow: hidden; 
+            white-space:nowrap;
+            text-overflow:ellipsis;">なし</p>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </ul>
+</div>
+
 {% endblock %}

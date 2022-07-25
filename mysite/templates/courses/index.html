@@ -9,10 +9,20 @@
       <div class="col-sm-6 col-xl-3">
         <div class="shadow-sm p-3 mb-5 bg-white rounded card card__one" style="width: 100%;">
           <div class="card__desc">
-            <h3><a href="/courses/{{ course.id }}/">{{ course.course_name }}</a></h3>
+            <h4 style="overflow: hidden; 
+            white-space:nowrap;
+            text-overflow:ellipsis;"><a href="/courses/{{ course.id }}/">{{ course.course_name }}</a></h4>
             <p>{{ course.teacher_name }}</p>
-            <p>{{ course.class_hours }}</p>
-            <p>{{ course.course_form }}</p>
+            <p class="card_text">{{ course.class_hours }}</p>
+            {% if course.course_form != " " %}
+            <p style="overflow: hidden; 
+            white-space:nowrap;
+            text-overflow:ellipsis;">{{ course.course_form }}</p>
+            {% else %}
+            <p style="overflow: hidden; 
+            white-space:nowrap;
+            text-overflow:ellipsis;">なし</p>
+            {% endif %}
           </div>
         </div>
       </div>

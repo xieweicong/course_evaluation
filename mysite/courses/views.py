@@ -38,4 +38,5 @@ def search_course(request):
     # if a GET (or any other method) we'll create a blank form
     else:
         search_form = SearchForm()
-    return render(request, "courses/home.html", {"form": search_form})
+        course_list = Course.objects.order_by('?')[:12]
+    return render(request, "courses/home.html", {"form": search_form, "course_list": course_list})
